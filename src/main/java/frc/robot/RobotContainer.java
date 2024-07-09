@@ -6,14 +6,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.Autos;
-import frc.robot.commands.arm.MoveArmCommand;
-import frc.robot.subsystems.TemplateDrivetrainSubsystem;
 
 
 /**
@@ -22,14 +17,14 @@ import frc.robot.subsystems.TemplateDrivetrainSubsystem;
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
-public class RobotContainer
-{
+public class RobotContainer {
 
     XboxController xboxController;
 
-    /** The container for the robot. Contains subsystems, OI devices, and commands. */
-    public RobotContainer()
-    {
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
+    public RobotContainer() {
         xboxController = new XboxController(Constants.XBOX_CONTROLLER_PORT);
         configureBindings();
     }
@@ -44,18 +39,8 @@ public class RobotContainer
      * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
      * joysticks}.
      */
-    private void configureBindings()
-    {
-        // Uses a lambda expression to set the default command of the TemplateDrivetrainSubsystem to drive
-        // based on the joystick values of the Xbox controller
-        TemplateDrivetrainSubsystem.getInstance().setDefaultCommand(
-            new RunCommand(() -> TemplateDrivetrainSubsystem.getInstance().tankDrive(xboxController.getLeftY(), xboxController.getRightY()),
-                TemplateDrivetrainSubsystem.getInstance())
-        );
+    private void configureBindings() {
 
-        // While the A button on the Xbox controller is pressed, the arm will move up at 50% power
-        JoystickButton moveArmButton = new JoystickButton(xboxController, XboxController.Button.kA.value);
-        moveArmButton.whileTrue(new MoveArmCommand(0.5));
     }
 
     /**
@@ -63,8 +48,7 @@ public class RobotContainer
      *
      * @return the command to run in autonomous
      */
-    public Command getAutonomousCommand()
-    {
-        return Autos.driveForwardAuto();
+    public Command getAutonomousCommand() {
+        return null;
     }
 }
