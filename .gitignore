@@ -333,3 +333,6 @@ bin/
 # End entries from WPI Lib team
 
 .run/
+
+simgui-window.json
+simgui.json
