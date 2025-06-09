@@ -5,25 +5,30 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.constants.Constants;
+import frc.robot.motorsystem.MotorSystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
+ * "declarative" paradigm, very little robot logic should actually be handled in the {@link RegularRobot}
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
 
-    XboxController xboxController;
+    CommandJoystick xboxController;
+    MotorSystem motorSystem = new MotorSystem();
 
-    /** The container for the robot. Contains subsystems, OI devices, and commands. */
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
     public RobotContainer() {
-        xboxController = new XboxController(Constants.XBOX_CONTROLLER_PORT);
+        xboxController = new CommandJoystick(Constants.XBOX_CONTROLLER_PORT);
         configureBindings();
     }
 
@@ -36,14 +41,27 @@ public class RobotContainer {
      * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
      * joysticks}.
      */
-    private void configureBindings() {}
+    private void configureBindings() {
+        xboxController.button(1)
+                .onTrue(Commands.print("button 1").andThen(motorSystem.moveAtPosition(8)));
+        xboxController.button(2)
+                .onTrue(motorSystem.moveAtPosition(-8));
+        xboxController.button(3)
+                .onTrue(motorSystem.moveAtPosition(4));
+        xboxController.button(4)
+                .onTrue(motorSystem.moveAtPosition(-4));
+        xboxController.button(5)
+                .onTrue(motorSystem.stop());
+    }
 
     /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
+     * Use this to pass the autonomous command to the main {@link RegularRobot} class.
      *
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
         return null;
     }
+
+
 }
